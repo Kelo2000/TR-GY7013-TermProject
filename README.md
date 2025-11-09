@@ -38,7 +38,7 @@ before running main loop code, you will have these files:
    pulocationid, dolocationid,
    pu_x, pu_y, do_x, do_y
    ```
-   Extract the file from [fhvhv_tripdata_2025-07.zip](fhvhv_tripdata_2025-07.zip)and make sure you put the file in the base path of the directory
+   Extract the file from [fhvhv_tripdata_2025-07.zip](https://drive.google.com/drive/folders/1cZCWfXYDOzTbPDIEzSS9X6qC1rZXnYSJ?usp=sharing)and make sure you put the file in the base path of the directory
 
 2. **Filtered trip data** (`fhvhv_trips_reqtime_18to20_July1to8_2025.csv`)  
    Must include the following columns:
