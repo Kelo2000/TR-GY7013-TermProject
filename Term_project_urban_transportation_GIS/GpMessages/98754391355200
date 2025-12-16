@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, November 5, 2025 12:45:30 AM</msg><msg code="1" type="100">ERROR 000013: Centroid_x already in taxi_zones
+ERROR 000852: Cannot add field Centroid_x_coordinate to GPLYR_{B9BF9BEC-5ABF-4943-92C3-8AE91FB3CE3E}
+Failed to execute (AddFields).
+</msg><msg code="0" type="0">Failed script Calculate Geometry Attributes...</msg><msg code="-2147467259" type="100">Failed to execute (CalculateGeometryAttributes).</msg><msg code="0" type="3">Failed at Wednesday, November 5, 2025 12:45:31 AM (Elapsed Time: 0.65 seconds)</msg></messages>

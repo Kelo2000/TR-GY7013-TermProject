@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><messages><msg code="0" type="2">Start Time: Wednesday, November 5, 2025 12:44:29 AM</msg><msg code="-2147467259" type="100">﻿Traceback (most recent call last):
+﻿  File "c:\program files\arcgis\pro\Resources\ArcToolbox\scripts\calculategeometry.py", line 376, in &lt;module&gt;
+﻿    CalculateGeometry(fc, properties, lUnit, aUnit, cs, cformat)
+﻿  File "c:\program files\arcgis\pro\Resources\ArcToolbox\scripts\calculategeometry.py", line 187, in CalculateGeometry
+﻿    fidxes = [ucur.fields.index(cprop[0]) for cprop in properties]
+﻿             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+﻿  File "c:\program files\arcgis\pro\Resources\ArcToolbox\scripts\calculategeometry.py", line 187, in &lt;listcomp&gt;
+﻿    fidxes = [ucur.fields.index(cprop[0]) for cprop in properties]
+﻿              ^^^^^^^^^^^
+﻿RuntimeError: Cannot find field 'Centroid_x_coordinate'
+</msg><msg code="0" type="0">Failed script Calculate Geometry Attributes...</msg><msg code="-2147467259" type="100">Failed to execute (CalculateGeometryAttributes).</msg><msg code="0" type="3">Failed at Wednesday, November 5, 2025 12:44:30 AM (Elapsed Time: 1.47 seconds)</msg></messages>
