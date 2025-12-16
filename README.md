@@ -1,5 +1,5 @@
-#  TERM PROJECT:
-## 🚖An integrated matching and vehicle-rebalancing framework for ride-hailing services: a simulation using NYC taxi data
+  
+# 🚖An integrated matching and vehicle-rebalancing framework for ride-hailing services: a simulation using NYC taxi data
 
 Ride-hailing services have revolutionized urban transportation by offering flexible, on-demand mobility, serving millions of trips monthly in cities like New York. These systems comprise two key components: ride matching, which assigns passengers to available vehicles, and vehicle rebalancing, which repositions idle vehicles to anticipate future demand. Traditionally treated as separate tasks, this project proposes an integrated optimization approach that jointly decides on matching and rebalancing, outperforming sequential methods by reducing vehicle miles traveled while maintaining high service quality. Using mixed-integer linear programming and real NYC trip data, our simulations demonstrate clear advantages in efficiency and performance.
 
