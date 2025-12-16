@@ -1,8 +1,7 @@
-# 🚖 Ride-Hailing Model: Preprocessing and Integrated Matching/Rebalancing
+#  TERM PROJECT:
+## 🚖An integrated matching and vehicle-rebalancing framework for ride-hailing services: a simulation using NYC taxi data
 
-This project implements a complete ride-hailing simulation system, including data preprocessing, model input generation, and optimization models for integrated matching and vehicle rebalancing.
-
-The system processes trip data to generate **epoch-based model inputs** for the *Integrated Ride-Hailing Matching and Vehicle Rebalancing Model*. Each epoch represents **one minute** of system state and contains the matrices and vectors used in the optimization process.
+Ride-hailing services have revolutionized urban transportation by offering flexible, on-demand mobility, serving millions of trips monthly in cities like New York. These systems comprise two key components: ride matching, which assigns passengers to available vehicles, and vehicle rebalancing, which repositions idle vehicles to anticipate future demand. Traditionally treated as separate tasks, this project proposes an integrated optimization approach that jointly decides on matching and rebalancing, outperforming sequential methods by reducing vehicle miles traveled while maintaining high service quality. Using mixed-integer linear programming and real NYC trip data, our simulations demonstrate clear advantages in efficiency and performance.
 
 ---
 
