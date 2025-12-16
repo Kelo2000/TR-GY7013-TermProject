@@ -1,17 +1,17 @@
-# 🚖 Ride-Hailing Model Input Generator
+# 🚖 Ride-Hailing Model: Preprocessing and Integrated Matching/Rebalancing
 
-This project prepares **epoch-based model input data** for the *Integrated Ride-Hailing Matching and Vehicle Rebalancing Model*.
+This project implements a complete ride-hailing simulation system, including data preprocessing, model input generation, and optimization models for integrated matching and vehicle rebalancing.
 
-Each epoch represents **one minute** of system state and contains the matrices and vectors used in the optimization process.
+The system processes trip data to generate **epoch-based model inputs** for the *Integrated Ride-Hailing Matching and Vehicle Rebalancing Model*. Each epoch represents **one minute** of system state and contains the matrices and vectors used in the optimization process.
 
 ---
 
-## ⚙️ Conda Environment Setup
+## ⚙️ Environment Setup
 
 ### 1. Create Conda Environment
 ```bash
-conda create -n tlc_data python=3.10 -y
-conda activate tlc_data
+conda create -n rh_model python=3.10 -y
+conda activate rh_model
 ```
 
 ### 2. Install Requirements
@@ -19,77 +19,84 @@ conda activate tlc_data
 pip install -r requirements.txt
 ```
 
-## Jupyter Notebook(Minimal requirements):
-if you run directly on jupyter notebook, make sure to run this command
+**Minimal requirements:**
 ```
-!pip install numpy pandas matplotlib
+pandas>=2.0
+numpy>=1.24
+jupyterlab>=4.0
+gurobipy>=10.0
+matplotlib>=3.7
 ```
 
 ---
 
 ## 📂 Required Input Files
 
-before running main loop code, you will have these files:
+Place these files in the same directory as the notebooks:
 
-1. **(Optional)Trip data** (`fhvhv_tripdata_2025-07.csv.csv`)  
-   Must include the following columns:
-   ```
-   request_datetime, pickup_datetime, dropoff_datetime,
-   pulocationid, dolocationid,
-   pu_x, pu_y, do_x, do_y
-   ```
-   Extract the file from [fhvhv_tripdata_2025-07.zip](https://drive.google.com/drive/folders/1cZCWfXYDOzTbPDIEzSS9X6qC1rZXnYSJ?usp=sharing)and make sure you put the file in the base path of the directory
+1. **Raw trip data** (`fhvhv_tripdata_2025-07.csv`)  
+   Original FHvHV trip data with timestamps and locations.
 
-2. **Filtered trip data** (`fhvhv_trips_reqtime_18to20_July1to8_2025.csv`)  
-   Must include the following columns:
-   ```
-   request_datetime, pickup_datetime, dropoff_datetime,
-   pulocationid, dolocationid,
-   pu_x, pu_y, do_x, do_y
-   ```
-
-3. **Zone centroids** (`taxi_zones_toysample_TableToExcel_csv.csv`)  
+2. **Zone centroids** (`taxi_zones_toysample_TableToExcel_csv.csv`)  
    Must include the following columns:
    ```
    LocationID, centroid_x, centroid_y
    ```
 
-4. **Precomputed Demand (φ) averages** (`phi_avg_15min.csv`)  
-   Average future demand per zone and 15-minute time bin.  
-   Columns:
-   ```
-   zone, time_bin_label, avg_requests
-   ```
+---
+
+## 📋 Project Structure
+
+### 1. **Preprocessing** (`preprocessing.ipynb`)
+This notebook handles data preparation and feature engineering:
+
+- **Data Loading & Filtering**: Loads raw trip data and filters trips within selected zones.
+- **Noise Addition**: Adds Gaussian jitter to pickup/dropoff coordinates for realism.
+- **Time-Based Filtering**: Separates training (July 7-11, 18:00-20:00) and test data (July 14, 18:00-20:00).
+- **Demand Computation**: Calculates average demand (φ) per zone and 15-minute time bins.
+- **Validation**: Checks trip distributions and ensures no missing minutes.
+
+**Outputs:**
+- `filtered_fhvhv_trips.csv`: Filtered trips within zones.
+- `filtered_fhvhv_trips_with_jitter.csv`: Trips with added coordinate noise.
+- `phi_avg_15min_Jul7to11_18to20.csv`: Precomputed demand averages.
+- `test_trips_Jul14_18to20.csv`: Test dataset for simulation.
+
+### 2. **Model Implementation** (`FINAL_MAIN_CODE.ipynb`)
+This notebook contains the core optimization models and simulation:
+
+- **Integrated (Joint) Model**: Simultaneous matching and rebalancing optimization.
+- **Sequential Benchmark Model**: Separate matching then rebalancing phases.
+- **Simulation Loop**: Per-minute epoch processing with vehicle state updates.
+- **Sensitivity Analysis**: Parameter sweeps for fleet size, penalty, alpha, and time horizons.
+
+**Key Components:**
+- **Vehicle Dynamics**: Tracks idle, en-route, on-trip, and rebalancing states.
+- **Cost Matrices**: Distance calculations between vehicles, requests, and zones.
+- **Impact Tensor**: Models supply-demand balance effects.
+- **Gurobi Optimization**: Solves assignment problems with imbalance penalties.
+
+**Outputs:**
+- Performance metrics: served/unserved requests, VMT, solver runtime.
+- Comparative analysis between joint and sequential approaches.
 
 ---
 
-## ▶️ Running the Notebook
+## ▶️ Running the Notebooks
 
-
-Open **[main.ipynb](main.ipynb)** and run The Main LOOP CELL(since required files have already been created).  
-The notebook loads the filtered trips, computes distances, and creates an input to our model per minutes:
-
-```python
-epochs.append(dict(
-    t=pd.to_datetime(t),
-    request_batch=Rt.copy(),
-    vehicles_snapshot=vehicles.copy(),
-    idx_idle=idx_idle,
-    idx_rebalancing=idx_rebal,
-    c1=c1, c2=c2, c3=c3,
-    phi=phi, gamma=gamma,
-    impact=impact,
-    zone_ids=zone_ids,
-))
+Launch Jupyter:
+```bash
+jupyter lab
 ```
 
+### Step 1: Run Preprocessing
+Open **`preprocessing.ipynb`** and execute all cells to prepare the data.
 
-Each epoch contains:
+### Step 2: Run Model Simulation
+Open **`FINAL_MAIN_CODE.ipynb`** and run the cells to execute the models and sensitivity analysis.
 
-| Key | Description |
-|-----|--------------|
-| `c1, c2, c3` | Distance cost matrices |
-| `phi, gamma` | Demand & supply vectors |
-| `impact` | 3D impact tensor |
-| `idx_idle, idx_rebalancing` | Vehicle indices by state |
-| `request_batch, vehicles_snapshot` | State snapshots for that minute |
+
+✅ **Complete Workflow:**  
+1. Run preprocessing to generate clean datasets and demand estimates.  
+2. Execute the main code to simulate and optimize ride-hailing operations.  
+3. Analyze results for insights into matching efficiency and rebalancing benefits.
